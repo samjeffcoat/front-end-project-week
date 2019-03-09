@@ -35,7 +35,10 @@ class App extends Component {
           </nav>
         </header>
         <main>
-          <Route path="/notes-list" component={NotesList} />
+          <Route
+            path="/notes-list"
+            render={props => <NotesList {...props} notes={this.state.notes} />}
+          />
           <Route path="/addnote" component={CreateNote} />
           <Route
             exact
