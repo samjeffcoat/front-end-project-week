@@ -19,8 +19,17 @@ class App extends Component {
       .catch(err => console.log(err.response));
   }
 
-  receivedNewNote = n => {
-    this.setState({ notes: n });
+  addNewNote = note => {
+    Axios.post("https://fe-notes.herokuapp.com/note/create", note)
+      .then(res => {
+        this.setState(prevState => ({
+          notes: [...prevState.notes, note]
+        }));
+      })
+      .catch(err => console.log(err));
+  };
+  addNote = note => {
+    this.addNewNote(note);
   };
   render() {
     return (
@@ -39,7 +48,10 @@ class App extends Component {
             path="/notes-list"
             render={props => <NotesList {...props} notes={this.state.notes} />}
           />
-          <Route path="/addnote" component={CreateNote} />
+          <Route
+            path="/addnote"
+            render={props => <CreateNote {...props} newNote={this.addNote} />}
+          />
           <Route
             exact
             path="/note/:id/edit"
