@@ -7,55 +7,46 @@ class EditNote extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
-      fetchedNote: {
-        title: " ",
-        textBody: " "
-      }
-    };
-  }
-  componentDidMount() {
-    axios
-      .get(
-        `https://fe-notes.herokuapp.com/note/get/${this.props.match.params.id}`
-      )
-      .then(res => this.setState({ fetchedNote: res.data, loading: false }))
-      .catch(err =>
-        this.setState({ loading: false, error: true, errorMsg: err.response })
-      );
-  }
-  editNote = event => {
-    event.preventDefault();
-    let { title, textBody } = this.state.fetchedNote;
-    let note = {
-      title,
-      textBody
-    };
-    axios
-      .put(
-        `http:s//fe-notes.herokuapp.com/note/${this.state.fetchedNote.id}`,
-        note
-      )
-      .then(res => {
-        this.props.receivedNewNote(res.data);
-        this.props.history.push(`/note/${this.state.fetchedNote.id}`);
-      })
-      .catch(err => console.log(err.response));
-    this.setState({
       title: " ",
       textBody: " "
+    };
+  }
+
+  componentDidMount = () => {
+    axios.get(`https://fe-notes.herokuapp.com/note/get/all`).then(res => {
+      let notes = res.data;
+      let note = notes.filter(note => {
+        if (this.props.match.params.id === note.id) {
+          return note;
+        }
+      })[0];
     });
   };
   handleChange = e => {
-    e.persist();
-    this.setState(prevState => {
-      return {
-        fetchedNote: {
-          ...prevState.fetchedNote,
-          [e.target.name]: e.target.value
-        }
-      };
-    });
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  editNote = e => {
+    e.preventDefault();
+    const id = this.props.match.id;
+    const newNote = {
+      title: this.state.title,
+      textBody: this.state.textBody
+    };
+    axios
+      .put(`https://fe-notes.herokuapp.com/note/edit/${id}`, newNote)
+      .then(res => this.setState({ notes: res.data }))
+      .then(
+        this.setState({
+          title: " ",
+          textBody: " ",
+          id: this.props.id
+        })
+      )
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch(err => console.log(err));
   };
   render() {
     if (this.state.loading) {
