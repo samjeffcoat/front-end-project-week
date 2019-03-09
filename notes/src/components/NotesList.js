@@ -1,30 +1,21 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { NavLink } from "react-router-dom";
 
-class NotesList extends React.Component {
-  state = {
-    notes: []
-  };
-  render() {
-    return (
-      <div>
-        <h2>Notes</h2>
-        <ul>
-          {this.state.notes.map(n => (
-            <li key={n._id}>
-              {n.title}
-              {n.textBody}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-  componentDidMount() {
-    axios.get("https://fe-notes.herokuapp.com/note/get/all").then(res => {
-      this.setState({ notes: res.data });
-    });
-  }
+function NotesList(props) {
+  return (
+    <div class="notes-container">
+      {props.notes.map(note => (
+        <NavLink key={note.id} to={"/$(note.id"}>
+          <div class="note-card">
+            <h3 onClick={() => props.history.push(`/${note.id}`)}>
+              {note.title}
+            </h3>
+            <p>{note.textBody}</p>
+          </div>
+        </NavLink>
+      ))}
+    </div>
+  );
 }
 
 export default NotesList;
