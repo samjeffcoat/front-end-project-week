@@ -1,53 +1,56 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Form, Input, Button } from "reactstrap";
+import Axios from "axios";
 
 class CreateNote extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      note: {
-        title: " ",
-        textBody: " "
-      }
+      title: " ",
+      textBody: " "
     };
   }
 
-  addNote = ev => {
-    ev.preventDefault();
-    this.props.newNote(this.state.note);
-    this.props.history.push("/");
+  addNote = () => {
+    Axios.post(`https://fe-notes.herokuapp.com/note/create`, this.state)
+      .then(res => {
+        this.setState({ notes: res.data });
+      })
+      .then(() => {
+        this.props.history.push("/");
+      });
   };
 
   handleInputChange = e => {
     e.preventDefault();
     this.setState({
-      note: { ...this.state.note },
       [e.target.name]: e.target.value
     });
   };
 
   render() {
     return (
-      <Form onSubmit={this.addNote}>
+      <Form>
         <Input
           onChange={this.handleInputChange}
           placeholder="Title"
           name="title"
           type="text"
+          value={this.state.title}
         />
         <Input
           type="textbody"
           onChange={this.handleInputChange}
           placeholder="Text Body"
           name="textBody"
+          value={this.state.textBody}
         />
         <br />
-        <Button type="submit" value="save">
-          Save
-        </Button>
+        <Button onClick={this.addNote}>Save</Button>
       </Form>
     );
   }
 }
 
-export default CreateNote;
+export default withRouter(CreateNote);
