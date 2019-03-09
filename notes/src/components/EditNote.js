@@ -49,31 +49,25 @@ class EditNote extends React.Component {
       .catch(err => console.log(err));
   };
   render() {
-    if (this.state.loading) {
-      return <p>Loading....</p>;
-    } else if (this.state.error) {
-      return <p>We couldn't find your note to edit!</p>;
-    } else {
-      return (
-        <div>
-          <Form onSubmit={this.editNote}>
-            <Input
-              onChange={this.handleChange}
-              placeholder="Title"
-              value={this.state.fetchedNote.title}
-              name="title"
-            />
-            <Input
-              onChange={this.handleChange}
-              placeholder="textbody"
-              value={this.state.textBody}
-              name="textbody"
-            />
-            <Button type="submit">Edit Note!</Button>
-          </Form>
-        </div>
-      );
-    }
+    return (
+      <div>
+        <Form onSubmit={this.editNote}>
+          <Input
+            onChange={this.handleChange}
+            placeholder="Title"
+            value={this.state.title}
+            name="title"
+          />
+          <Input
+            onChange={this.handleChange}
+            placeholder="textbody"
+            value={this.state.textBody}
+            name="textbody"
+          />
+          <Button type="submit">Edit Note!</Button>
+        </Form>
+      </div>
+    );
   }
 }
 

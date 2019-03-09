@@ -40,7 +40,7 @@ class App extends Component {
             &nbsp; |&nbsp;
             <NavLink to="/addnote">Add New Note</NavLink>
             &nbsp; |&nbsp;
-            <NavLink to="/note/:id/edit">Edit Note</NavLink>
+            <NavLink to="/edit/:id">Edit Note</NavLink>
           </nav>
         </header>
         <main>
@@ -54,13 +54,8 @@ class App extends Component {
           />
           <Route
             exact
-            path="/note/:id/edit"
-            render={props => (
-              <EditNote
-                {...props}
-                receivedNewNote={this.state.receivedNewNote}
-              />
-            )}
+            path="/edit/:id/"
+            render={props => <EditNote {...props} notes={this.state.notes} />}
           />
         </main>
       </>
