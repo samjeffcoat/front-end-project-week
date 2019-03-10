@@ -34,6 +34,32 @@ class App extends Component {
     });
   };
 
+  editNote = (note, id) => {
+    Axios.put(`http://fe-notes.herokuapp.com/note/edit/${id}`, note)
+      .then(res => {
+        this.setState(currentState => {
+          let newNote = currentState.notes.map(item => {
+            if (item.id === id) {
+              return res.data;
+            } else {
+              return item;
+            }
+          });
+          return { notes: newNote };
+        });
+        Axios.get(`https://fe-notes.herokuapp.com/note/get/all`).then(res => {
+          this.setState({
+            notes: res.data,
+            isLoaded: true
+          });
+        });
+      })
+      .catch(err => console.log(err));
+  };
+  editingNote = (note, id) => {
+    this.editNote(note, id);
+  };
+
   addNewNote = note => {
     Axios.post("https://fe-notes.herokuapp.com/note/create", note)
       .then(res => {
@@ -70,7 +96,13 @@ class App extends Component {
           <Route
             exact
             path="/edit/:id/"
-            render={props => <EditNote {...props} notes={this.state.notes} />}
+            render={props => (
+              <EditNote
+                {...props}
+                note={this.state.note}
+                editingNote={this.state}
+              />
+            )}
           />
         </main>
       </>
