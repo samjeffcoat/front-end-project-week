@@ -36,7 +36,7 @@ class Note extends React.Component {
   };
   render() {
     return (
-      <Fragment>
+      <fragment>
         <div>
           <div class="note-view">
             <Button color="primary">
@@ -51,7 +51,7 @@ class Note extends React.Component {
           <h1>{this.state.note.title}</h1>
           <p>{this.state.note.textBody}</p>
         </div>
-      </Fragment>
+      </fragment>
     );
   }
 }

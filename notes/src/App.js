@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Route, NavLink } from "react-router-dom";
-import { NotesList } from "./Components/";
-import { EditNote } from "./Components/";
-import { CreateNote } from "./components/CreateNote";
+import NotesList from "./Components/NotesList";
+import EditNote from "./Components/EditNote";
+import CreateNote from "./Components/CreateNote";
+import Note from "./Components/Note";
 
 import "./App.css";
 import Axios from "axios";
@@ -77,6 +78,8 @@ class App extends Component {
             <NavLink to="/addnote">Add New Note</NavLink>
             &nbsp; |&nbsp;
             <NavLink to="/edit/:id">Edit Note</NavLink>
+            &nbsp; |&nbsp;
+            <NavLink to="/:id">Note</NavLink>
           </nav>
         </header>
         <main>
@@ -100,6 +103,7 @@ class App extends Component {
               />
             )}
           />
+          <Route exact path="/:id" component={Note} />
         </main>
       </>
     );
