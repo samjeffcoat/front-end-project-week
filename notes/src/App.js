@@ -10,12 +10,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      notes: null,
-      note: {
-        title: " ",
-        textBody: " "
-      },
-      isLoaded: false
+      notes: []
     };
   }
   componentDidMount() {
@@ -101,7 +96,7 @@ class App extends Component {
                 {...props}
                 note={this.state.note}
                 editingNote={this.editingNote}
-                handleInput= {this.handleInput}
+                handleInput={this.handleInput}
               />
             )}
           />
