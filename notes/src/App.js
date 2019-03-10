@@ -7,17 +7,32 @@ import CreateNote from "./components/CreateNote";
 import EditNote from "./components/EditNote";
 import Axios from "axios";
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      notes: []
+      notes: null,
+      note: {
+        title: " ",
+        textBody: " "
+      },
+      isLoaded: false
     };
   }
   componentDidMount() {
     Axios.get("https://fe-notes.herokuapp.com/note/get/all")
-      .then(res => this.setState({ notes: res.data }))
+      .then(res => {
+        console.log(res.data);
+        this.setState({ notes: res.data, isLoaded: true });
+      })
       .catch(err => console.log(err.response));
   }
+
+  handleInput = event => {
+    event.preventDefault();
+    this.setState({
+      note: { ...this.state.note, [event.target.name]: event.target.value }
+    });
+  };
 
   addNewNote = note => {
     Axios.post("https://fe-notes.herokuapp.com/note/create", note)
