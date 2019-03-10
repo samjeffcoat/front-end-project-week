@@ -100,7 +100,8 @@ class App extends Component {
               <EditNote
                 {...props}
                 note={this.state.note}
-                editingNote={this.state}
+                editingNote={this.editingNote}
+                handleInput= {this.handleInput}
               />
             )}
           />
