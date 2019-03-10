@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+
 import { Form, Input, Button } from "reactstrap";
 import Axios from "axios";
 
@@ -53,4 +53,4 @@ class CreateNote extends Component {
   }
 }
 
-export default withRouter(CreateNote);
+export default CreateNote;

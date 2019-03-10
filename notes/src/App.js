@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Route, NavLink } from "react-router-dom";
-import NotesList from "./components/NotesList";
+import { NotesList } from "./Components/";
+import { EditNote } from "./Components/";
+import { CreateNote } from "./components/CreateNote";
 
 import "./App.css";
-import CreateNote from "./components/CreateNote";
-import EditNote from "./components/EditNote";
 import Axios from "axios";
 class App extends Component {
   constructor() {
