@@ -68,6 +68,20 @@ class App extends Component {
   addNote = note => {
     this.addNewNote(note);
   };
+
+  /*
+  deleteNote = () => {
+    const id = this.props.match.params.id;
+    axios
+      .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
+      .then(res => {
+        this.setState({ notes: res.data });
+      })
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch(err => console.log(err));
+  };*/
   render() {
     return (
       <>
