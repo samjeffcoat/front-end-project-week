@@ -6,9 +6,10 @@ import EditNote from "./Components/EditNote";
 import CreateNote from "./Components/CreateNote";
 import Note from "./Components/Note";
 import DeleteNote from "./Components/DeleteNote";
-
+//import styled from "styled-components";
 import "./App.css";
 import axios from "axios";
+
 class App extends Component {
   constructor() {
     super();
@@ -99,43 +100,44 @@ class App extends Component {
     this.addNewNote(note);
   };
   render() {
+    const { isLoaded, notes } = this.state;
     return (
-      <>
-        <header>
-          <nav>
-            <NavLink to="/notes-list">All Notes</NavLink>
-            &nbsp; |&nbsp;
-            <NavLink to="/addnote">Add New Note</NavLink>
-            &nbsp; |&nbsp;
-            <NavLink to="/edit/:id">Edit Note</NavLink>
-            &nbsp; |&nbsp;
-            <NavLink to="/:id">Note</NavLink>
-          </nav>
-        </header>
-        <main>
-          <Route
-            path="/notes-list"
-            render={props => <NotesList {...props} notes={this.state.notes} />}
-          />
-          <Route
-            path="/addnote"
-            render={props => <CreateNote {...props} newNote={this.addNote} />}
-          />
-          <Route
-            exact
-            path="/edit/:id/"
-            render={props => (
-              <EditNote
-                {...props}
-                note={this.state.note}
-                editingNote={this.editingNote}
-                handleInput={this.handleInput}
-              />
-            )}
-          />
-          <Route exact path="/:id" component={Note} />
-        </main>
-      </>
+      <div className="app-container">
+        {isLoaded ? (
+          [
+            <Route
+              exact
+              path="/"
+              render={props => <NoteContainer {...props} notes={notes} />}
+            />,
+
+            <Route
+              path="/note/:id"
+              render={props => (
+                <Note {...props} deletingNote={this.deletingNote} />
+              )}
+            />
+          ]
+        ) : (
+          <div>Loading</div>
+        )}
+        <Route
+          path="/create-new"
+          render={props => <CreateNote {...props} newNote={this.addNote} />}
+        />
+
+        <Route
+          path="/edit/:id"
+          render={props => (
+            <EditNote
+              {...props}
+              note={this.state.note}
+              editingNote={this.editingNote}
+              handleInput={this.handleInput}
+            />
+          )}
+        />
+      </div>
     );
   }
 }
