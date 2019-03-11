@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card } from "../Components/CardComponent";
+import Card from "../Components/CardComponent";
 
 const MainContent = props => {
-  requestAnimationFrame(
+  return (
     <div>
       <div class="title">
         <h3>Your Notes: </h3>

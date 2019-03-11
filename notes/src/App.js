@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NoteContainer from "./Containers/NoteContainer";
 import { Route, NavLink } from "react-router-dom";
 import NotesList from "./Components/NotesList";
 import EditNote from "./Components/EditNote";
@@ -7,16 +8,22 @@ import Note from "./Components/Note";
 import DeleteNote from "./Components/DeleteNote";
 
 import "./App.css";
-import Axios from "axios";
+import axios from "axios";
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      notes: []
+      notes: null,
+      note: {
+        title: " ",
+        textBody: " "
+      },
+      isLoaded: false
     };
   }
   componentDidMount() {
-    Axios.get("https://fe-notes.herokuapp.com/note/get/all")
+    axios
+      .get("https://fe-notes.herokuapp.com/note/get/all")
       .then(res => {
         console.log(res.data);
         this.setState({ notes: res.data, isLoaded: true });
@@ -32,7 +39,8 @@ class App extends Component {
   };
 
   editNote = (note, id) => {
-    Axios.put(`http://fe-notes.herokuapp.com/note/edit/${id}`, note)
+    axios
+      .put(`http://fe-notes.herokuapp.com/note/edit/${id}`, note)
       .then(res => {
         this.setState(currentState => {
           let newNote = currentState.notes.map(item => {
@@ -44,7 +52,7 @@ class App extends Component {
           });
           return { notes: newNote };
         });
-        Axios.get(`https://fe-notes.herokuapp.com/note/get/all`).then(res => {
+        axios.get(`https://fe-notes.herokuapp.com/note/get/all`).then(res => {
           this.setState({
             notes: res.data,
             isLoaded: true
@@ -57,8 +65,29 @@ class App extends Component {
     this.editNote(note, id);
   };
 
+  deleteNote = () => {
+    const id = this.props.match.params.id;
+    axios
+      .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
+      .then(res => {
+        console.log("res.data:", res.data);
+        axios.get("https://fe-notes.herokuapp.com/note/get/all").then(res => {
+          this.setState({
+            notes: res.data,
+            isLoaded: true
+          });
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  deletingNote = id => {
+    this.deleteNote(id);
+  };
+
   addNewNote = note => {
-    Axios.post("https://fe-notes.herokuapp.com/note/create", note)
+    axios
+      .post("https://fe-notes.herokuapp.com/note/create", note)
       .then(res => {
         this.setState(prevState => ({
           notes: [...prevState.notes, note]
@@ -69,20 +98,6 @@ class App extends Component {
   addNote = note => {
     this.addNewNote(note);
   };
-
-  /*
-  deleteNote = () => {
-    const id = this.props.match.params.id;
-    axios
-      .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
-      .then(res => {
-        this.setState({ notes: res.data });
-      })
-      .then(() => {
-        this.props.history.push("/");
-      })
-      .catch(err => console.log(err));
-  };*/
   render() {
     return (
       <>
