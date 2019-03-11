@@ -8,7 +8,7 @@ class EditNote extends Component {
     super(props);
     this.state = {
       title: " ",
-      textBody: " "
+      textbody: " "
     };
   }
   componentDidMount = () => {
@@ -30,7 +30,7 @@ class EditNote extends Component {
     const id = this.props.match.params.id;
     const newNote = {
       title: this.state.title,
-      textBody: this.state.textBody,
+      textBody: this.state.textBody
     };
     axios
       .put(`https://fe-notes.herokuapp.com/note/edit/${id}`, newNote)
@@ -38,7 +38,7 @@ class EditNote extends Component {
       .then(
         this.setState({
           title: " ",
-          textBody: " ",
+          textbody: " ",
           id: this.props.id
         })
       )
@@ -55,15 +55,16 @@ class EditNote extends Component {
         <Form onSubmit={this.editNote}>
           <Input
             onChange={this.handleChanges}
-            placeholder=" Note Title"
+            placeholder=" Note"
             name="title"
             value={this.state.title}
           />
           <Input
+            type="textarea"
             onChange={this.handleChanges}
             placeholder="Note Content"
             name="textbody"
-            type="textarea"
+            //type="textarea"
             value={this.state.textBody}
           />
           <Button type="submit" value="save">
