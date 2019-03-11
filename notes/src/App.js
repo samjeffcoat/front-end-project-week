@@ -12,12 +12,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      notes: null,
-      note: {
-        title: " ",
-        textBody: " "
-      },
-      isLoaded: false
+      notes: []
     };
   }
   componentDidMount() {
@@ -97,30 +92,23 @@ class App extends Component {
     this.addNewNoteToServer(note);
   };
   render() {
-    const { isLoaded, notes } = this.state;
     return (
       <div className="app-container">
-        {isLoaded ? (
-          [
-            <Route
-              exact
-              path="/"
-              render={props => <NoteContainer {...props} notes={notes} />}
-            />,
-
-            <Route
-              path="/note/:id"
-              render={props => <Note {...props} deleteNote={this.deleteNote} />}
-            />
-          ]
-        ) : (
-          <div>Loading</div>
-        )}
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <NoteContainer {...props} notes={this.state.notes} />
+          )}
+        />
+        <Route
+          path="/note/:id"
+          render={props => <Note {...props} deleteNote={this.deleteNote} />}
+        />
         <Route
           path="/create-new"
           render={props => <CreateNote {...props} newNote={this.addNewNote} />}
         />
-
         <Route
           path="/edit/:id"
           render={props => <EditNote {...props} notes={this.state.notes} />}

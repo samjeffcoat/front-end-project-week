@@ -8,9 +8,10 @@ class EditNote extends Component {
     super(props);
     this.state = {
       title: " ",
-      textbody: " "
+      textBody: " "
     };
   }
+
   componentDidMount = () => {
     axios.get(`'https://fe-notes.herokuapp.com/note/get/all`).then(res => {
       let notes = res.data;
@@ -18,10 +19,10 @@ class EditNote extends Component {
         if (this.props.match.params.id === note.id) {
           return note;
         }
-      })[0];
+      });
     });
   };
-  handleChanges = e => {
+  handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -30,10 +31,10 @@ class EditNote extends Component {
     const id = this.props.match.params.id;
     const newNote = {
       title: this.state.title,
-      textBody: this.state.textBody
+      textbody: this.state.textbody
     };
     axios
-      .put(`https://fe-notes.herokuapp.com/note/edit/${id}`, newNote)
+      .put(`https://fe-notes.herokuapp.com/note/edit/${id}/`, newNote)
       .then(res => this.setState({ notes: res.data }))
       .then(
         this.setState({
@@ -47,6 +48,31 @@ class EditNote extends Component {
       })
       .catch(err => console.log(err));
   };
+  /*
+
+  editNote = (note, id) => {
+    axios
+      .put(`https://fe-notes.herokuapp.com/note/edit/${id}/`, note)
+      .then(res => {
+        this.setState(currentState => {
+          let newNote = currentState.notes.map(item => {
+            if (item.id === id) {
+              return res.data;
+            } else {
+              return item;
+            }
+          });
+          return { notes: newNote };
+        });
+        axios.get("https://fe-notes.herokuapp.com/get/all").then(res => {
+          this.setState({
+            notes: res.data
+          });
+        });
+      })
+      .catch(err => console.log(err));
+  };
+*/
   render() {
     return (
       <div className="edit-note-container">
@@ -54,22 +80,20 @@ class EditNote extends Component {
         <h2>Edit Note: </h2>
         <Form onSubmit={this.editNote}>
           <Input
-            onChange={this.handleChanges}
+            onChange={this.handleInputChange}
             placeholder=" Note"
             name="title"
             value={this.state.title}
           />
           <Input
             type="textarea"
-            onChange={this.handleChanges}
+            onChange={this.handleInputChange}
             placeholder="Note Content"
             name="textbody"
             //type="textarea"
             value={this.state.textBody}
           />
-          <Button type="submit" value="save">
-            Edit Note!
-          </Button>
+          <Button type="submit">Edit Note!</Button>
         </Form>
       </div>
     );
