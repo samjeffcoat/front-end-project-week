@@ -13,3 +13,5 @@ const DeleteNote = props => {
     </div>
   );
 };
+
+export default DeleteNote;

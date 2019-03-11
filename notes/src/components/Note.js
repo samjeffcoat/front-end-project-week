@@ -1,5 +1,8 @@
 import React from "react";
 import axios from "axios";
+import CardComponent from "./CardComponent";
+import MenuContainer from "../Containers/MenuContainer";
+import DeleteNote from "./DeleteNote";
 import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
 
@@ -7,9 +10,7 @@ class Note extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      note: null,
-      noteView: true,
-      delete: false
+      note: []
     };
   }
   componentDidMount() {
@@ -26,34 +27,35 @@ class Note extends React.Component {
         console.log(err);
       });
   };
-  dontDelete= event => {
-    event.preventDefault();
-    this.setState({delete: !this.state.delete})
-  }
 
   deleteNote = () => {
-    this.props.deleteNote(this.props.match.params.id);
-    this.props.history.push("/");
+    const id = this.props.match.params.id;
+    axios
+      .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
+      .then(res => {
+        this.setState({ notes: res.data });
+      })
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch(err => console.log(err));
   };
   render() {
     if (!this.state.note) {
-      return <div> Loading</div>
+      return <div> Loading</div>;
     }
     return (
-      <fragment>
-        <div>
-          <div class="note-view">
-            <Button color="primary">
-              <NavLink to={`/edit/${this.props.match.params.id}`}>Edit</NavLink>
-            </Button>
-            <Button color="danger" onClick={this.deleteNote}>
-              Delete!
-            </Button>
-          </div>
-          <h1>{this.state.note.title}</h1>
-          <p>{this.state.note.textBody}</p>
-        </div>
-      </fragment>
+      <div className="container">
+        <MenuContainer />
+        <Button color="primary">
+          <NavLink to={`/edit/${this.props.match.params.id}`}>Edit</NavLink>
+        </Button>
+        <Button color="danger" onClick={this.deleteNote}>
+          Delete
+        </Button>
+
+        <CardComponent note={this.state.note} noteView={this.state.noteView} />
+      </div>
     );
   }
 }

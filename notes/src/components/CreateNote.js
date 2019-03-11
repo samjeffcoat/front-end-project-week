@@ -13,7 +13,7 @@ class CreateNote extends Component {
     };
   }
 
-  addNote = e => {
+  addNewNote = e => {
     e.preventDefault();
     this.props.newNote(this.state.note);
     this.props.history.push("/");
@@ -43,7 +43,7 @@ class CreateNote extends Component {
           name="textBody"
         />
         <br />
-        <Button onClick={this.addNote}>Save</Button>
+        <Button onClick={this.addNewNote}>Save</Button>
       </Form>
     );
   }

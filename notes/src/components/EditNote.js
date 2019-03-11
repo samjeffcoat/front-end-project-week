@@ -1,26 +1,27 @@
 import React, { Component } from "react";
 import { Form, Input, Button } from "reactstrap";
-
+import MenuContainer from "../Containers/MenuContainer";
 
 const EditNote = props => {
-  const EditingNotes = event => {
+  const EditNotes = event => {
     event.preventDefault();
-    props.editingNote(props.note, props.match.params.id);
+    props.editNote(props.note, props.match.params.id);
     props.history.push("/");
   };
   return (
-    <div>
+    <div className="edit-note-container">
+      <MenuContainer />
       <h2>Edit Note: </h2>
-      <Form onSubmit={EditingNotes}>
+      <Form onSubmit={EditNotes}>
         <Input
           onChange={props.handleInput}
-          placeholder="Title"
+          placeholder=" Note Title"
           name="title"
           type="text"
         />
         <Input
           onChange={props.handleInput}
-          placeholder="textbody"
+          placeholder="Note Content"
           name="textbody"
           type="text"
         />

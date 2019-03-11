@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import NoteContainer from "./Containers/NoteContainer";
-import { Route, NavLink } from "react-router-dom";
-import NotesList from "./Components/NotesList";
+import { Route } from "react-router-dom";
 import EditNote from "./Components/EditNote";
 import CreateNote from "./Components/CreateNote";
 import Note from "./Components/Note";
-import DeleteNote from "./Components/DeleteNote";
-//import styled from "styled-components";
+
 import "./App.css";
 import axios from "axios";
 
@@ -39,7 +37,7 @@ class App extends Component {
     });
   };
 
-  editNote = (note, id) => {
+  editNoteFromServer = (note, id) => {
     axios
       .put(`http://fe-notes.herokuapp.com/note/edit/${id}`, note)
       .then(res => {
@@ -62,12 +60,11 @@ class App extends Component {
       })
       .catch(err => console.log(err));
   };
-  editingNote = (note, id) => {
-    this.editNote(note, id);
+  editNote = (note, id) => {
+    this.editNoteFromServer(note, id);
   };
 
-  deleteNote = () => {
-    const id = this.props.match.params.id;
+  deleteNoteFromServer = id => {
     axios
       .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
       .then(res => {
@@ -82,11 +79,11 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
-  deletingNote = id => {
-    this.deleteNote(id);
+  deleteNote = id => {
+    this.deleteNoteFromServer(id);
   };
 
-  addNewNote = note => {
+  addNewNoteToServer = note => {
     axios
       .post("https://fe-notes.herokuapp.com/note/create", note)
       .then(res => {
@@ -97,7 +94,7 @@ class App extends Component {
       .catch(err => console.log(err));
   };
   addNote = note => {
-    this.addNewNote(note);
+    this.addNewNoteToServer(note);
   };
   render() {
     const { isLoaded, notes } = this.state;
@@ -113,9 +110,7 @@ class App extends Component {
 
             <Route
               path="/note/:id"
-              render={props => (
-                <Note {...props} deletingNote={this.deletingNote} />
-              )}
+              render={props => <Note {...props} deleteNote={this.deleteNote} />}
             />
           ]
         ) : (
@@ -123,7 +118,7 @@ class App extends Component {
         )}
         <Route
           path="/create-new"
-          render={props => <CreateNote {...props} newNote={this.addNote} />}
+          render={props => <CreateNote {...props} newNote={this.addNewNote} />}
         />
 
         <Route
@@ -132,7 +127,7 @@ class App extends Component {
             <EditNote
               {...props}
               note={this.state.note}
-              editingNote={this.editingNote}
+              editNote={this.editNote}
               handleInput={this.handleInput}
             />
           )}
