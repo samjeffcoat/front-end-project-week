@@ -36,7 +36,7 @@ class App extends Component {
       note: { ...this.state.note, [event.target.name]: event.target.value }
     });
   };
-
+  /* Moved to edit note
   editNoteFromServer = (note, id) => {
     axios
       .put(`http://fe-notes.herokuapp.com/note/edit/${id}`, note)
@@ -63,7 +63,7 @@ class App extends Component {
   editNote = (note, id) => {
     this.editNoteFromServer(note, id);
   };
-
+/* Moved to Note View
   deleteNoteFromServer = id => {
     axios
       .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
@@ -82,7 +82,7 @@ class App extends Component {
   deleteNote = id => {
     this.deleteNoteFromServer(id);
   };
-
+*/
   addNewNoteToServer = note => {
     axios
       .post("https://fe-notes.herokuapp.com/note/create", note)
@@ -123,14 +123,7 @@ class App extends Component {
 
         <Route
           path="/edit/:id"
-          render={props => (
-            <EditNote
-              {...props}
-              note={this.state.note}
-              editNote={this.editNote}
-              handleInput={this.handleInput}
-            />
-          )}
+          render={props => <EditNote {...props} notes={this.state.notes} />}
         />
       </div>
     );
