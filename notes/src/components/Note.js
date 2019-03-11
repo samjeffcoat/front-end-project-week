@@ -7,7 +7,9 @@ class Note extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      note: []
+      note: null,
+      noteView: true,
+      delete: false
     };
   }
   componentDidMount() {
@@ -24,12 +26,19 @@ class Note extends React.Component {
         console.log(err);
       });
   };
+  dontDelete= event => {
+    event.preventDefault();
+    this.setState({delete: !this.state.delete})
+  }
 
   deleteNote = () => {
     this.props.deleteNote(this.props.match.params.id);
     this.props.history.push("/");
   };
   render() {
+    if (!this.state.note) {
+      return <div> Loading</div>
+    }
     return (
       <fragment>
         <div>
