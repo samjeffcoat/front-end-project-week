@@ -4,6 +4,7 @@ import NotesList from "./Components/NotesList";
 import EditNote from "./Components/EditNote";
 import CreateNote from "./Components/CreateNote";
 import Note from "./Components/Note";
+import DeleteNote from "./Components/DeleteNote";
 
 import "./App.css";
 import Axios from "axios";
