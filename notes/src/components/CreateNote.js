@@ -1,29 +1,30 @@
 import React, { Component } from "react";
-
+import axios from "axios";
 import { Form, Input, Button } from "reactstrap";
 
 class CreateNote extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      note: {
-        title: " ",
-        textBody: " "
-      }
+      title: " ",
+      textBody: " "
     };
   }
 
   addNewNote = e => {
     e.preventDefault();
-    this.props.newNote(this.state.note);
-    this.props.history.push("/");
+    axios
+      .post("https://fe-notes.herokuapp.com/note/create", this.state)
+      .then(res => {
+        this.setState({ notes: res.data });
+      })
+      .then(() => {
+        this.props.history.push("/");
+      });
   };
 
   handleInputChange = e => {
-    e.preventDefault();
-    this.setState({
-      note: { ...this.state.note, [e.target.name]: e.target.value }
-    });
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
@@ -34,13 +35,14 @@ class CreateNote extends Component {
           onChange={this.handleInputChange}
           placeholder="Title"
           name="title"
-          type="text"
+          value={this.state.title}
         />
         <Input
-          type="textbody"
+          type="textarea"
           onChange={this.handleInputChange}
           placeholder="Text Body"
           name="textBody"
+          value={this.state.textBody}
         />
         <br />
         <Button onClick={this.addNewNote}>Save</Button>

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import CardComponent from "./CardComponent";
 import MenuContainer from "../Containers/MenuContainer";
-import DeleteNote from "./DeleteNote";
+
 import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
 

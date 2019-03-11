@@ -5,7 +5,7 @@ import Card from "../Components/CardComponent";
 const MainContent = props => {
   return (
     <div>
-      <div class="title">
+      <div className="title">
         <h3>Your Notes: </h3>
         <div className="notes-container">
           {props.notes ? (
