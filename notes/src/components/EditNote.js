@@ -15,7 +15,7 @@ class EditNote extends Component {
   componentDidMount = () => {
     axios.get(`'https://fe-notes.herokuapp.com/note/get/all`).then(res => {
       let notes = res.data;
-      let note = notes.filter(note => {
+      let note = notes.filter(note=>  {
         if (this.props.match.params.id === note.id) {
           return note;
         }
