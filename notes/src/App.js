@@ -31,66 +31,6 @@ class App extends Component {
       note: { ...this.state.note, [event.target.name]: event.target.value }
     });
   };
-  /* Moved to edit note
-  editNoteFromServer = (note, id) => {
-    axios
-      .put(`http://fe-notes.herokuapp.com/note/edit/${id}`, note)
-      .then(res => {
-        this.setState(currentState => {
-          let newNote = currentState.notes.map(item => {
-            if (item.id === id) {
-              return res.data;
-            } else {
-              return item;
-            }
-          });
-          return { notes: newNote };
-        });
-        axios.get(`https://fe-notes.herokuapp.com/note/get/all`).then(res => {
-          this.setState({
-            notes: res.data,
-            isLoaded: true
-          });
-        });
-      })
-      .catch(err => console.log(err));
-  };
-  editNote = (note, id) => {
-    this.editNoteFromServer(note, id);
-  };
-/* Moved to Note View
-  deleteNoteFromServer = id => {
-    axios
-      .delete(`https://fe-notes.herokuapp.com/note/delete/${id}`)
-      .then(res => {
-        console.log("res.data:", res.data);
-        axios.get("https://fe-notes.herokuapp.com/note/get/all").then(res => {
-          this.setState({
-            notes: res.data,
-            isLoaded: true
-          });
-        });
-      })
-      .catch(err => console.log(err));
-  };
-
-  deleteNote = id => {
-    this.deleteNoteFromServer(id);
-  };
-*/
-  addNewNoteToServer = note => {
-    axios
-      .post("https://fe-notes.herokuapp.com/note/create", note)
-      .then(res => {
-        this.setState(prevState => ({
-          notes: [...prevState.notes, note]
-        }));
-      })
-      .catch(err => console.log(err));
-  };
-  addNote = note => {
-    this.addNewNoteToServer(note);
-  };
   render() {
     return (
       <div className="app-container">

@@ -48,31 +48,6 @@ class EditNote extends Component {
       })
       .catch(err => console.log(err));
   };
-  /*
-
-  editNote = (note, id) => {
-    axios
-      .put(`https://fe-notes.herokuapp.com/note/edit/${id}/`, note)
-      .then(res => {
-        this.setState(currentState => {
-          let newNote = currentState.notes.map(item => {
-            if (item.id === id) {
-              return res.data;
-            } else {
-              return item;
-            }
-          });
-          return { notes: newNote };
-        });
-        axios.get("https://fe-notes.herokuapp.com/get/all").then(res => {
-          this.setState({
-            notes: res.data
-          });
-        });
-      })
-      .catch(err => console.log(err));
-  };
-*/
   render() {
     return (
       <div className="edit-note-container">
@@ -90,7 +65,6 @@ class EditNote extends Component {
             onChange={this.handleInputChange}
             placeholder="Note Content"
             name="textBody"
-            //type="textarea"
             value={this.state.textBody}
           />
           <Button type="submit">Edit Note!</Button>
