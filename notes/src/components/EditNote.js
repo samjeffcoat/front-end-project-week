@@ -15,7 +15,7 @@ class EditNote extends Component {
   componentDidMount = () => {
     axios.get(`'https://fe-notes.herokuapp.com/note/get/all`).then(res => {
       let notes = res.data;
-      let note = notes.filter(note=>  {
+      let note = notes.filter(note => {
         if (this.props.match.params.id === note.id) {
           return note;
         }
@@ -31,7 +31,7 @@ class EditNote extends Component {
     const id = this.props.match.params.id;
     const newNote = {
       title: this.state.title,
-      textbody: this.state.textbody
+      textBody: this.state.textBody
     };
     axios
       .put(`https://fe-notes.herokuapp.com/note/edit/${id}/`, newNote)
@@ -39,7 +39,7 @@ class EditNote extends Component {
       .then(
         this.setState({
           title: " ",
-          textbody: " ",
+          textBody: " ",
           id: this.props.id
         })
       )
@@ -89,7 +89,7 @@ class EditNote extends Component {
             type="textarea"
             onChange={this.handleInputChange}
             placeholder="Note Content"
-            name="textbody"
+            name="textBody"
             //type="textarea"
             value={this.state.textBody}
           />
