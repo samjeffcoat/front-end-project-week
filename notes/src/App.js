@@ -4,10 +4,16 @@ import { Route } from "react-router-dom";
 import EditNote from "./Components/EditNote";
 import CreateNote from "./Components/CreateNote";
 import Note from "./Components/Note";
+import styled from "styled-components";
 
 import "./App.css";
 import axios from "axios";
 
+const AppContainer = styled.div`
+  max-width: 880px;
+  margin: 40px;
+  height: 100vh;
+`;
 class App extends Component {
   constructor() {
     super();
@@ -33,7 +39,7 @@ class App extends Component {
   };
   render() {
     return (
-      <div className="app-container">
+      <AppContainer>
         <Route
           exact
           path="/"
@@ -53,7 +59,7 @@ class App extends Component {
           path="/edit/:id"
           render={props => <EditNote {...props} notes={this.state.notes} />}
         />
-      </div>
+      </AppContainer>
     );
   }
 }

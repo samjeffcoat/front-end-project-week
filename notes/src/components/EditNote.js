@@ -1,7 +1,17 @@
 import React, { Component } from "react";
-import { Form, Input, Button } from "reactstrap";
+import { Form, Input } from "reactstrap";
 import MenuContainer from "../Containers/MenuContainer";
 import axios from "axios";
+import styled from "styled-components";
+
+const EditButton = styled.button`
+background: red,
+border-radius: 3px;
+border: 2px solid white;
+color: red;
+margin 0.5em 1em;
+padding: 0.25em 1em;
+`;
 
 class EditNote extends Component {
   constructor(props) {
@@ -67,7 +77,7 @@ class EditNote extends Component {
             name="textBody"
             value={this.state.textBody}
           />
-          <Button type="submit">Edit Note!</Button>
+          <EditButton type="submit">Edit Note!</EditButton>
         </Form>
       </div>
     );

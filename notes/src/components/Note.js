@@ -3,8 +3,55 @@ import axios from "axios";
 import CardComponent from "./CardComponent";
 import MenuContainer from "../Containers/MenuContainer";
 
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: #f2f1f2;
+`;
+const NoteViewContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+const OptionsContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  height: 100px;
+  padding-right: 10px;
+`;
+
+const ListOptions = styled.div`
+  display: flex;
+  margin-left: 5px;
+  flex-wrap: wrap;
+  list-style-type: none;
+  height: 30px;
+`;
+
+const Options = styled.li`
+  display: flex;
+  margin-left: 5px;
+  height: 5px;
+  cursor: pointer;
+`;
+const StyledLink = styled(Link)`
+  color: black;
+  text-decoration: none;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
 
 class Note extends React.Component {
   constructor(props) {
@@ -45,17 +92,27 @@ class Note extends React.Component {
       return <div> Loading</div>;
     }
     return (
-      <div className="container">
+      <Container>
         <MenuContainer />
-        <Button color="primary">
-          <NavLink to={`/edit/${this.props.match.params.id}`}>Edit</NavLink>
-        </Button>
-        <Button color="danger" onClick={this.deleteNote}>
-          Delete
-        </Button>
-
-        <CardComponent note={this.state.note} noteView={this.state.noteView} />
-      </div>
+        <NoteViewContainer>
+          <OptionsContainer>
+            <ListOptions>
+              <Options>
+                <StyledLink to={`/edit/${this.props.match.params.id}`}>
+                  Edit
+                </StyledLink>
+              </Options>
+              <Button color="danger" onClick={this.deleteNote}>
+                Delete
+              </Button>
+            </ListOptions>
+          </OptionsContainer>
+          <CardComponent
+            note={this.state.note}
+            noteView={this.state.noteView}
+          />
+        </NoteViewContainer>
+      </Container>
     );
   }
 }
