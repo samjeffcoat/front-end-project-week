@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Card from "../Components/CardComponent";
+import Card from "../components/CardComponent";
 
 const MainContent = props => {
   return (

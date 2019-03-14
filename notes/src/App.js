@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import NoteContainer from "./Containers/NoteContainer";
 import { Route } from "react-router-dom";
-import EditNote from "./Components/EditNote";
-import CreateNote from "./Components/CreateNote";
-import Note from "./Components/Note";
+import EditNote from "./components/EditNote";
+import CreateNote from "./components/CreateNote";
+import Note from "./components/Note";
 import styled from "styled-components";
 
 import "./App.css";
